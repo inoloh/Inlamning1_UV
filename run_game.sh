@@ -7,9 +7,9 @@ cp ./*.java  Helena_Theise_labb
 cd ~/guessingGame/Helena_Theise_labb
 
 echo "Running game from $(pwd)"
-echo "compiling.."
+echo "Compiling.."
 javac GuessingGame.java
-echo "running game.."
+echo "Running game.."
 java GuessingGame
 echo "Done!"
 echo "Removing class files.."
