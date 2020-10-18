@@ -1,0 +1,83 @@
+Jag siktar på VG.
+
+När använder man add respektive commit?
+add lägger till filer för att kunna bli commitade, de läggs i "staging area".
+commit används för att faktiskt "commit":a dem till ett lokalt repository, dvs man 
+skapar en ny revision av det som ligger i staging area.
+
+Vad är pull respektive push?
+pull är när du vill ladda  ner nya versioner av en fil från ett remote repositry.
+push är när du vill ladda upp en fil till ett remote repositry (centrala repositoryt).
+
+
+När använder man log respektive status?
+git status används för att se vad som ligger och väntar på att bli commitat. Man får
+även reda på i vilken branch man är i, om några filer inte blivit "add":ade ännu, osv.
+git log används för att se vad det finns för commitade versioner, vad som hänt i branchen 
+du är i.
+
+
+Hur kan man formulera sig i sina commit-meddelanden?
+I nutid, att man lägger till något nu. Vad som hänt i filen sen senast och om något förändrats. 
+Gärna hålla det kort och koncist, för att få en överblick och känna igen de olika versionerna på ett smidigt sätt.
+
+
+
+
+Skillnader i sätt att rulla tillbaka koden till ett tidigare tillstånd, motivation till
+varför man skulle använda den ena eller den andra.
+Ge exempel på de kommandon du använder för att göra detta.
+
+git reset
+git log --oneline ger oss hashcode:rna för våra commits. Dem kan du sedan använda för att git reset <koden> för 
+att hoppa tillbaka till den versionen, och fortsätta därifrån. Detta funkar bäst om det gäller din egna 
+lokala repository eftersom ingen annan berörs av det. Med kommandot git reset --hard <koden> ställs du på 
+den commiten och allt över försvinner.
+Men här får man vara försiktig eftersom det verkligen tas bort på riktigt.
+Ex på output från terminalen:
+Helenas-MacBook-Pro:guessingGame holoni$ git reset --hard a5b80b0
+HEAD is now at a5b80b0 adds a bash script to run the game
+
+
+
+git revert liknar git reset men istället för att "ta bort" commits som vi inte vill ha så läggs istället
+en ny commit till med ändringarna som vi gjort. Så den commiten "cancellerar" de ändringar vi inte vill ha kvar.
+revert kan vara bättre om man jobbar tillsammans i grupp på ett projekt,
+då det kan bli svårt om commits som man själv jobbar med inte finns längre i grenen (branchen).
+Ex på output från terminalen:
+Helenas-MacBook-Pro:guessingGame holoni$ git revert 8ad0460
+[testbranch 2c3308f] Revert "en till fil som vi inte vill ha"
+ 1 file changed, 3 deletions(-)
+ delete mode 100644 newFile.txt
+
+Helenas-MacBook-Pro:guessingGame holoni$ git log --oneline
+2c3308f (HEAD -> testbranch) Revert "en till fil som vi inte vill ha"
+8ad0460 en till fil som vi inte vill ha
+a5b80b0 (origin/main) adds a bash script to run the game
+136d6e1 changes instance of Guesser to facilitate testing - highest number 10
+9295a12 adds content to the getReply()
+ed114d3 adds two methods to start() in Guesser.java and calls this start-method in main in GuessingGame.java
+ade398f adds a new instance of Guesser in the main method
+2601f1d adds a main-method to GuessingGame.java
+5b39b29 adds a constructor
+16de8e5 adds a class Guesser.java
+2bcf816 adds a .gitignore file
+
+
+
+git stash
+Kommandot sparar temporärt dina ändringar och går samtidigt tillbaka i tiden och du kan fortsätta där.
+Sen kan du komma tillbaka och lägga till dem igen. Det är bra om du behöver jobba på något annat, men inte
+är redo att commit:a det du höll på med ännu. När du är redo så lägger du ihop dem med git stash pop. 
+Det som finns "stashed" finns lokalt i din Git repository.
+Ex på output från terminalen:
+Helenas-MacBook-Pro:guessingGame holoni$ git stash
+Saved working directory and index state WIP on testbranch: 12b98ec adds another file
+
+La till ändringar i enTillFil.txt
+
+Helenas-MacBook-Pro:guessingGame holoni$ git stash pop
+Auto-merging enTillFil.txt
+CONFLICT (content): Merge conflict in enTillFil.txt
+
+här får man gå in och se vad konflikten är och lösa det, sen är filen ihopslagen och är redo att "add and commit".
