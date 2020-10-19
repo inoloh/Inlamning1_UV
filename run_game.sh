@@ -4,7 +4,7 @@ echo "Helena Theise"
 mkdir Helena_Theise_labb
 cp ./*.java  Helena_Theise_labb
 
-cd ~/guessingGame/Helena_Theise_labb
+cd Helena_Theise_labb/
 
 echo "Running game from $(pwd)"
 echo "Compiling.."
